@@ -53,7 +53,7 @@ for i in range(row):
 
 print('平均灰度值', gray_average)
 # 将处理好的图片保存
-img_write_path = img_write + r'/' + 'test_mao.jpg'
+img_write_path = img_write + r'/' + 'test_02.jpg'
 cv2.imwrite(img_write_path, dst)
 
 # dt.to_csv(matrix_path, index=False, mode='a', header=False, encoding='utf-8')
