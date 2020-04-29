@@ -13,6 +13,7 @@ root.withdraw()
 face_png = filedialog.askopenfilename()   # 选择要识别的文件
 # dir_path = filedialog.askdirectory()
 
+# 手动设置路径
 face_path = r'D:\BaiduNetdiskDownload\RGB\haarcascade_frontalface_alt.xml'
 eye_path = r'D:\BaiduNetdiskDownload\RGB\haarcascade_eye.xml'
 
