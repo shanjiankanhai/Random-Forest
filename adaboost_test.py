@@ -32,6 +32,7 @@ img2 = cv2.resize(img1, dsize=(1280, 960), fx=2, fy=2)
 img = img2
 
 faces = face_cascade.detectMultiScale(img, 1.2, 2)
+print('faces:', faces)
 for (x, y, w, h) in faces:
     cv2.rectangle(img, (x, y), (x+w, x+h), (255, 0, 0), 2)  # 用颜色为BGR（255,0,0）粗度为2的线条在img画出识别出的矩型
     face_re = img[y:y+h, x:x+w]  # 抽取出框出的脸部部分，注意顺序y在前
