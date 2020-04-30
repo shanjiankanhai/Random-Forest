@@ -17,7 +17,7 @@ face_png = filedialog.askopenfilename()   # 选择要识别的文件
 # 手动设置路径
 face_path = r'D:\BaiduNetdiskDownload\RGB\haarcascade_frontalface_alt.xml'
 eye_path = r'D:\BaiduNetdiskDownload\RGB\haarcascade_eye.xml'
-file_name = r'D:\BaiduNetdiskDownload\RGB\saves_06.png'
+file_name = r'D:\BaiduNetdiskDownload\RGB\saves_15.png'
 
 # 导入分类器
 # face_cascade = cv2.CascadeClassifier(r'D:\opencv\sources\data\haarcascades/haarcascade_frontalface_alt.xml')

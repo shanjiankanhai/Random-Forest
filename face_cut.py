@@ -11,13 +11,14 @@ root.withdraw()
 face_path = filedialog.askopenfilename()
 dir_path = filedialog.askdirectory()
 
-output_file = dir_path + r'/out_face.png'
+output_file = dir_path + r'/hsv_out_face.png'
 
-img =cv2.imread(face_path)
+img = cv2.imread(face_path)
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 h, s, v = cv2.split(hsv)
 minHue = 5
 maxHue = 170
+# maxHue = 150
 hueMask = cv2.inRange(h, minHue, maxHue)
 minSat = 25
 maxSat = 166
