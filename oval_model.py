@@ -13,13 +13,13 @@ import time
 root = tk.Tk()
 root.withdraw()
 
-file_path = filedialog.askopenfilename()   # 读取YCrCb空间的图像
+file_path = filedialog.askopenfilename()   # 读取RGB空间的图像
 # Cr_csv_path = filedialog.askopenfilename()
 # Cb_csv_path = filedialog.askopenfilename()
 # img_csv_path = filedialog.askopenfilename()
-face_out_path = filedialog.askopenfilename()
+# face_out_path = filedialog.askopenfilename()
 dir_path = filedialog.askdirectory()
-oval_name = dir_path + r'/oval.png'
+oval_name = dir_path + r'/oval_03.png'
 
 img_read = cv2.imread(file_path)   # 读取图像内容
 img_YCrCb = cv2.cvtColor(img_read, cv2.COLOR_RGB2YCrCb)   # 转换色彩空间
@@ -48,15 +48,36 @@ for row in range(x):
         Cb_v = Cb[row, col]
         x_matrix[row, col] = img[Cb_v, Cr_v]
 
-x_csv = DataFrame(x_matrix)
-x_csv.to_csv(face_out_path, index=False, header=False, decimal=',', mode='w')
+# x_csv = DataFrame(x_matrix)
+# x_csv.to_csv(face_out_path, index=False, header=False, decimal=',', mode='w')
 # 将图片和矩阵进行与运算
 and_matrix = np.zeros((x, y, 3), dtype='uint8')
 and_matrix[:, :, 0] = x_matrix
 and_matrix[:, :, 1] = x_matrix
 and_matrix[:, :, 2] = x_matrix
-img_and = cv2.bitwise_and(img_read, and_matrix)
+img_and = cv2.bitwise_and(img_read, and_matrix)   # 得到去除干扰的完整脸部
+print(img_and.shape)
+img_gray = cv2.cvtColor(img_and, cv2.COLOR_BGR2GRAY)   # 脸部转换成灰度图
+r, img_binary = cv2.threshold(img_gray, 127, 255, cv2.THRESH_BINARY)  # 脸部转换成二值图，准备进行腐蚀操作
+img_read_gray = cv2.cvtColor(img_read,cv2.COLOR_BGR2GRAY)   # 完整图片转换
+# 图像腐蚀操作
+kernel = np.ones((2, 2), np.uint8)
+erosion = cv2.erode(img_binary, kernel)
 # print(Y, Cr, Cb)
-cv2.imshow('name', img_and)
-# cv2.imwrite(oval_name, img)
+
+
+'''
+# 圆检测
+circles = cv2.HoughCircles(img_read_gray, cv2.HOUGH_GRADIENT, 1, 10, param1=50, param2=100, minRadius=10, maxRadius=200)
+
+circles = np.uint16(np.around(circles))
+for i in circles[0, :]:
+    # 画圆
+    cv2.circle(img_read, (i[0], i[1]), i[2], (0, 255, 0), 2)
+    # 画圆心点
+    cv2.circle(img_read, (i[0], i[1]), 2, (0, 0, 255), 3)
+cv2.imshow('detected circles', img_read)
+# cv2.imshow('name', erosion)
+# cv2.imwrite(oval_name, img_binary)
 cv2.waitKey(0)
+'''
